@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.http import HttpResponse
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -30,4 +31,5 @@ urlpatterns = [
         "api/ai/",
         include("ai_chat.urls")
     ),
+    path("", lambda request: HttpResponse("AI Study & Career Assistant API is running")),
 ]
