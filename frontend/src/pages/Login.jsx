@@ -15,7 +15,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/auth/login/",
+        "https://ai-study-career-assistant-d12d.onrender.com/api/auth/login/",
         {
           username: username,
           password: password,
@@ -24,14 +24,12 @@ function Login() {
 
       const { access, refresh } = response.data;
 
-      // Save authentication information
       localStorage.setItem("access_token", access);
       localStorage.setItem("refresh_token", refresh);
       localStorage.setItem("username", username);
 
       alert("Login successful!");
 
-      // Redirect to the dashboard
       window.location.href = "/";
     } catch (error) {
       console.error(error);
@@ -39,9 +37,7 @@ function Login() {
       if (error.response) {
         setError("Invalid username or password.");
       } else {
-        setError(
-          "Unable to connect to the server. Make sure Django is running."
-        );
+        setError("Unable to connect to the server.");
       }
     } finally {
       setLoading(false);
@@ -52,7 +48,6 @@ function Login() {
     <div className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
       <div className="w-full max-w-md">
 
-        {/* Application Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white">
             AI Study & Career Assistant
@@ -63,14 +58,12 @@ function Login() {
           </p>
         </div>
 
-        {/* Login Card */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
 
           <h2 className="text-2xl font-semibold text-white mb-6">
             Welcome back
           </h2>
 
-          {/* Error Message */}
           {error && (
             <div className="mb-5 rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-red-400 text-sm">
               {error}
@@ -79,7 +72,6 @@ function Login() {
 
           <form onSubmit={handleLogin} className="space-y-5">
 
-            {/* Username */}
             <div>
               <label
                 htmlFor="username"
@@ -99,7 +91,6 @@ function Login() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -119,7 +110,6 @@ function Login() {
               />
             </div>
 
-            {/* Login Button */}
             <button
               type="submit"
               disabled={loading}
@@ -130,7 +120,6 @@ function Login() {
 
           </form>
 
-          {/* Register Link */}
           <p className="text-center text-sm text-slate-400 mt-6">
             Don't have an account?
             <span className="text-white ml-1 cursor-pointer hover:underline">
