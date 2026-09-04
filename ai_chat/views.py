@@ -28,7 +28,7 @@ if GEMINI_API_KEY:
         api_key=GEMINI_API_KEY
     )
 
-GEMINI_MODEL = "gemini-3.5-flash-lite"
+GEMINI_MODEL = "gemini-3.5-flash"
 
 
 # =========================================================
