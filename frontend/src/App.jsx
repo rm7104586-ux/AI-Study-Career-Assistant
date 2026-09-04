@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./pages/Login";
+import Register from "./pages/register";
 import Dashboard from "./pages/Dashboard";
 import Chat from "./pages/Chat";
 import Notes from "./pages/Notes";
@@ -25,6 +26,14 @@ function App() {
           path="/login"
           element={
             token ? <Navigate to="/" replace /> : <Login />
+          }
+        />
+
+        {/* Register */}
+        <Route
+          path="/register"
+          element={
+            token ? <Navigate to="/" replace /> : <Register />
           }
         />
 

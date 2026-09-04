@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: "https://ai-study-career-assistant-d12d.onrender.com",
 });
 
 api.interceptors.request.use(
@@ -41,7 +41,7 @@ api.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/auth/refresh/",
+          "https://ai-study-career-assistant-d12d.onrender.com/api/auth/refresh/",
           {
             refresh: refreshToken,
           }

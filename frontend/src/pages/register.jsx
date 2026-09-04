@@ -1,41 +1,47 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
 
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://ai-study-career-assistant-d12d.onrender.com/api/auth/login/",
+      await axios.post(
+        "https://ai-study-career-assistant-d12d.onrender.com/api/auth/register/",
         {
           username: username,
           password: password,
         }
       );
 
-      const { access, refresh } = response.data;
+      alert("Account created successfully!");
 
-      localStorage.setItem("access_token", access);
-      localStorage.setItem("refresh_token", refresh);
-      localStorage.setItem("username", username);
-
-      alert("Login successful!");
-
-      window.location.href = "/";
+      window.location.href = "/login";
     } catch (error) {
       console.error(error);
 
       if (error.response) {
-        setError("Invalid username or password.");
+        const message =
+          error.response.data?.error ||
+          error.response.data?.detail ||
+          "Registration failed.";
+
+        setError(message);
       } else {
         setError("Unable to connect to the server.");
       }
@@ -54,14 +60,14 @@ function Login() {
           </h1>
 
           <p className="mt-3 text-slate-400">
-            Sign in to continue learning
+            Create your account
           </p>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
 
           <h2 className="text-2xl font-semibold text-white mb-6">
-            Welcome back
+            Create Account
           </h2>
 
           {error && (
@@ -70,7 +76,7 @@ function Login() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-5">
 
             <div>
               <label
@@ -85,7 +91,7 @@ function Login() {
                 type="text"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
-                placeholder="Enter your username"
+                placeholder="Choose a username"
                 required
                 className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
@@ -104,7 +110,28 @@ function Login() {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter your password"
+                placeholder="Create a password"
+                required
+                className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-slate-300 mb-2"
+              >
+                Confirm Password
+              </label>
+
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(event) =>
+                  setConfirmPassword(event.target.value)
+                }
+                placeholder="Confirm your password"
                 required
                 className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400"
               />
@@ -115,19 +142,19 @@ function Login() {
               disabled={loading}
               className="w-full py-3 rounded-lg bg-white text-slate-950 font-semibold hover:bg-slate-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Creating account..." : "Create Account"}
             </button>
 
           </form>
 
           <p className="text-center text-sm text-slate-400 mt-6">
-            Don't have an account?
+            Already have an account?
             <span
-  onClick={() => (window.location.href = "/register")}
-  className="text-white ml-1 cursor-pointer hover:underline"
->
-  Create one
-</span>
+              onClick={() => (window.location.href = "/login")}
+              className="text-white ml-1 cursor-pointer hover:underline"
+            >
+              Login
+            </span>
           </p>
 
         </div>
@@ -136,4 +163,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
