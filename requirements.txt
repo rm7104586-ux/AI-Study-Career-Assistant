@@ -4,6 +4,7 @@ uvicorn
 google-genai
 psycopg2-binary
 PyPDF2
+pypdf
 python-docx
 python-pptx
 python-dotenv
